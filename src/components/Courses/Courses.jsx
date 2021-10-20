@@ -15,13 +15,7 @@ const Courses = ({ setAddNewCourse }) => {
 				/>
 			</section>
 			{courseList.map((course) => {
-				return (
-					<CourseCard
-						key={course.id}
-						{...course}
-						setCourseList={setCourseList}
-					/>
-				);
+				return <CourseCard key={course.id} {...course} />;
 			})}
 		</>
 	);

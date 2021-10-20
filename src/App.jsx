@@ -1,7 +1,7 @@
 // import './App.css';
 import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
-import CreateCourse from './components/CreateCourse/CreateCourse';
+import CreateCourse from './components/CreateCourse/CreateCourse_old';
 
 // import './App.css';
 import { useState } from 'react';

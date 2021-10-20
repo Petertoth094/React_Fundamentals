@@ -2,17 +2,16 @@ import React, { useState } from 'react';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
 import { mockedAuthorsList, mockedCoursesList } from '../../utils/users';
-import { getFormattedDate } from '../../utils/getFormattedDate';
 import { v4 as uuid_v4 } from 'uuid';
 
-const CreateCourse = ({ setAddNewCourse }) => {
+const CreateCourse2 = ({ addNewCourse, setAddNewCourse }) => {
+	const [authorName, setAuthorName] = useState('');
+	const [authorList, setAuthorList] = useState(mockedAuthorsList);
+	const [courseAuthors, setCourseAuthors] = useState([]);
+
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
-	const [authorName, setAuthorName] = useState('');
 	const [duration, setDuration] = useState('');
-
-	const [authors, setAuthors] = useState(mockedAuthorsList);
-	const [courseAuthors, setCourseAuthors] = useState([]);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -31,79 +30,65 @@ const CreateCourse = ({ setAddNewCourse }) => {
 				authors: [...courseAuthors.map((authors) => authors.id)],
 			};
 			mockedCoursesList.push(newCourse);
-
-			const AllAuthors = [...authors, ...courseAuthors];
+			const AllAuthors = [...authorList, ...courseAuthors];
 			for (let author of AllAuthors) {
 				if (!mockedAuthorsList.includes(author)) {
 					mockedAuthorsList.push(author);
 				}
 			}
-			setAddNewCourse((toggle) => !toggle);
+			setAddNewCourse(!addNewCourse);
 		} else {
-			alert('Please fill all fields correctly');
+			alert('Please fill all fields correctky');
 		}
 	};
 
-	const createAuthor = () => {
-		if (authorName.length !== 0 && !mockedAuthorsList.includes(authorName)) {
+	const updateAuthors = () => {
+		if (authorName.length !== 0) {
 			const newAuthor = {
 				id: uuid_v4(),
 				name: authorName,
 			};
-			setAuthors((oldAuthors) => {
+			setAuthorList((oldAuthors) => {
 				return [...oldAuthors, newAuthor];
 			});
-			setAuthorName('');
-		} else {
-			alert('Incorrect author name!');
 		}
 	};
 
-	const addCourseAuthor = (id) => {
-		const tmpAuthors = authors.filter((author) => author.id === id);
-		console.log(tmpAuthors);
-		setCourseAuthors((oldCouseAuthors) => [...oldCouseAuthors, ...tmpAuthors]);
-		setAuthors((oldAuthors) => {
-			let newOldAuthors = oldAuthors.filter((oldauth) => oldauth.id !== id);
+	const addCourseAuthor = (e) => {
+		const authorName = e.target.parentNode.firstChild.textContent;
+		const tempList = authorList.filter((author) => author.name === authorName);
+		setCourseAuthors((oldCourseAuthors) => [...oldCourseAuthors, ...tempList]);
+		setAuthorList((oldAuthorlist) => {
+			let newOldAuthors = oldAuthorlist.filter(
+				(oldauth) => oldauth.name !== authorName
+			);
 			return [...newOldAuthors];
 		});
 	};
 
-	const removeCourseAuthor = (id) => {
-		const newAuthor = courseAuthors.filter(
-			(courseAuthor) => courseAuthor.id === id
+	const removeCourseAuthor = (e) => {
+		const authorName = e.target.parentNode.firstChild.textContent;
+		const tempList = courseAuthors.filter(
+			(author) => author.name === authorName
 		);
-		setAuthors((oldAuthors) => [...oldAuthors, ...newAuthor]);
+		setAuthorList((oldAuthorlist) => [...oldAuthorlist, ...tempList]);
 		setCourseAuthors((oldCourseAuthors) => {
-			const newCourseAuthors = oldCourseAuthors.filter(
-				(oldAuth) => oldAuth.id !== id
+			let newOldAuthors = oldCourseAuthors.filter(
+				(oldauth) => oldauth.name !== authorName
 			);
-			return [...newCourseAuthors];
+			return [...newOldAuthors];
 		});
 	};
 
-	const renderDuration = (duration) => {
-		if (duration !== 0) {
-			const min = duration % 60;
-			const hour = (duration - min) / 60;
-			return `${hour < 10 ? '0' + hour : hour}:${
-				min < 10 ? '0' + min : min
-			} hours`;
-		} else {
-			return '00:00 hours';
-		}
-	};
-
 	return (
-		<form onSubmit={handleSubmit} className='course-form'>
+		<form onSubmit={handleSubmit}>
 			<div className='course-header'>
-				<Button content='Create course' className='course-btn--submit' />
 				<label htmlFor='title'>Title</label>
 				<Input
 					place_holder='Enter title'
 					name='title'
 					id='title'
-					required
+					required={true}
 					valueHandler={title}
 					onChangeHandler={setTitle}
 				/>
@@ -117,41 +102,42 @@ const CreateCourse = ({ setAddNewCourse }) => {
 					value={description}
 					onChange={(e) => setDescription(e.target.value)}
 				></textarea>
+				<Button content='Create course' />
 			</div>
-			<div className='course-author'>
-				<h2 className='author-title'>Add author</h2>
+			<div className='course-body'>
+				<h2>Add author</h2>
 				<label htmlFor='name'>Author name</label>
 				<Input
 					name='name'
 					place_holder='Enter author name...'
+					// required={true}
 					valueHandler={authorName}
 					onChangeHandler={setAuthorName}
 				/>
-				<Button content='Create author' type='button' onClick={createAuthor} />
-				<h2 className='author-title'>Duration</h2>
+				<Button content='Create author' type='button' onClick={updateAuthors} />
+				<h2>Duration</h2>
 				<label htmlFor='duration'>Duration</label>
 				<Input
-					type='number'
 					place_holder='Enter duration in minutes...'
 					required={true}
 					valueHandler={duration}
 					onChangeHandler={setDuration}
 				/>
-				<p className='author-duration'>Duration: {renderDuration(+duration)}</p>
-				<h2 className='author-title'>Authors</h2>
-				{authors.map((author) => {
+				<p>Duration: {(+duration / 60).toFixed(2)} hours</p>
+				<h2>Authors</h2>
+				{authorList.map((author) => {
 					return (
 						<div key={author.id}>
-							<p>{author?.name}</p>
+							<p>{author.name}</p>
 							<Button
 								content='Add author'
 								type='button'
-								onClick={(e) => addCourseAuthor(author.id)}
+								onClick={addCourseAuthor}
 							/>
 						</div>
 					);
 				})}
-				<h2 className='author-title'>Course authors</h2>
+				<h2>Course authors</h2>
 				{courseAuthors.map((courseAuthor, index) => {
 					return (
 						<div key={index}>
@@ -159,7 +145,7 @@ const CreateCourse = ({ setAddNewCourse }) => {
 							<Button
 								content='Delete author'
 								type='button'
-								onClick={(e) => removeCourseAuthor(courseAuthor.id)}
+								onClick={removeCourseAuthor}
 							/>
 						</div>
 					);
@@ -169,4 +155,12 @@ const CreateCourse = ({ setAddNewCourse }) => {
 	);
 };
 
-export default CreateCourse;
+export default CreateCourse2;
+
+function getFormattedDate(date) {
+	let year = date.getFullYear();
+	let month = (1 + date.getMonth()).toString().padStart(2, '0');
+	let day = date.getDate().toString().padStart(2, '0');
+
+	return month + '/' + day + '/' + year;
+}

@@ -1,6 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 .husky
-
+./src/components/CreateCourse/CreateCourse_old.jsx
 # dependencies
 /node_modules
 /.pnp
