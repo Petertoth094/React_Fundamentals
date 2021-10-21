@@ -1,0 +1,14 @@
+.searchbar-form {
+    max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.searchbar-form input {
+    width: 400px;
+    margin-right: 20px;
+}
+
+.searchbar-form button {
+    padding: 6px 30px;
+}

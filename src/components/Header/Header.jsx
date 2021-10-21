@@ -1,16 +1,18 @@
 import React from 'react';
-import './header.css';
 
-import Logo from '../Logo/Logo';
-import Button from '../Button/Button';
+import Logo from './components/Logo/Logo';
+import Button from '../../common/Button/Button';
+import { BUTTON_LOGOUT } from '../../constants';
 import logo from '../../assets/images/logo.png';
+
+import './header.css';
 
 const Header = () => {
 	return (
 		<header className='header-container'>
 			<Logo logo={logo} />
-			<h2>Peter</h2>
-			<Button content={'logout'} />
+			<h2 className='header-title--right'>Peter</h2>
+			<Button content={BUTTON_LOGOUT} />
 		</header>
 	);
 };

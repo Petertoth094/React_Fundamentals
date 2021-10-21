@@ -53,4 +53,27 @@ const mockedAuthorsList = [
 	},
 ];
 
+const BUTTON_LOGOUT = 'Logout';
+const BUTTON_SEARCH = 'Search';
+const BUTTON_ADD_NEW_COURSE = 'Add new course';
+const BUTTON_SHOW_COURSE = 'Show course';
+const BUTTON_CREATE_NEW_AUTHOR = 'Create author';
+const BUTTON_CREATE_NEW_COURSE = 'Create course';
+const BUTTON_ADD_AUTHOR = 'Add author';
+const BUTTON_DELETE_AUTHOR = 'Delete author';
+const BUTTON_TYPE_SUBMIT = 'submit';
+const BUTTON_TYPE_BUTTON = 'button';
+
 export { mockedCoursesList, mockedAuthorsList };
+export {
+	BUTTON_LOGOUT,
+	BUTTON_SEARCH,
+	BUTTON_ADD_NEW_COURSE,
+	BUTTON_SHOW_COURSE,
+	BUTTON_CREATE_NEW_AUTHOR,
+	BUTTON_CREATE_NEW_COURSE,
+	BUTTON_ADD_AUTHOR,
+	BUTTON_DELETE_AUTHOR,
+	BUTTON_TYPE_SUBMIT,
+	BUTTON_TYPE_BUTTON,
+};

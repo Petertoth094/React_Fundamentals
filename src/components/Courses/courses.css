@@ -1,4 +1,16 @@
-.course-card {
-    border: 2px solid green;
-    margin-bottom: 5px;
+.search-section {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 15px;
+}
+
+.search-section:first-child {
+    flex: 3 1 1;
+}
+.search-section:nth-child(2) {
+    flex: 1 1 1;
+}
+
+.search-section button:last-child {
+    margin-left: auto;
 }

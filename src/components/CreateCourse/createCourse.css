@@ -1,0 +1,67 @@
+.create-course-header {
+  padding: 15px;
+}
+
+.create-course-header button {
+  float: right;
+  margin-right: 20px;
+  padding: 6px 30px;
+}
+.create-course-header input {
+  width: 40%;
+}
+
+.course-form label {
+  display: block;
+  margin: 10px 0px;
+}
+
+.create-course-description--wide {
+  width: 100%;
+  height: 100px;
+  border: 2px solid yellow;
+}
+
+.create-course-body {
+  margin: 10px;
+  padding: 15px;
+  border: 2px solid purple;
+  display: flex;
+  gap: 30px;
+}
+
+.create-course-author {
+  flex: 1;
+}
+
+.create-course-author input {
+  width: 100%;
+}
+
+.create-course-author button {
+  display: block;
+  margin: 20px auto 50px;
+}
+
+.author-title {
+  text-align: center;
+}
+
+.author-duration {
+  font-size: 1.5em;
+}
+.duration--bold {
+  font-weight: bold;
+}
+
+.course-authors--render {
+  flex: 1;
+}
+.course-authors--render button {
+  float: right;
+  margin-right: 30px;
+}
+
+.course-authors--render .author-title:last-of-type {
+    margin-top: 30px;
+}
