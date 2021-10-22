@@ -15,12 +15,12 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test:nowatch": "react-scripts test --watchAll=false",
     "eject": "react-scripts eject",
     "eslint": "eslint --ext .js --ext .jsx src",
     "eslint:fix": "eslint --fix --ext .js --ext .jsx src",
+    "test:nowatch": "react-scripts test --watchAll=false",
     "prepare": "husky install",
-    "prepublish": "npm run eslint:fix && npm run test:nowatch"
+    "prepublish": "npm run eslint:fix"
   },
   "eslintConfig": {
     "extends": [
