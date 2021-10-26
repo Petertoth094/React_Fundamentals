@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import SearchBar from './components/SearchBar/SearchBar';
 import CourseCard from './components/CourseCard/CourseCard';
@@ -12,8 +13,12 @@ import {
 
 import './courses.css';
 
-const Courses = ({ setAddNewCourse }) => {
+const Courses = ({ history }) => {
 	const [courseList, setCourseList] = useState(mockedCoursesList);
+
+	const createCourse = () => {
+		history.push(`/courses/add`);
+	};
 
 	return (
 		<>
@@ -25,7 +30,7 @@ const Courses = ({ setAddNewCourse }) => {
 				<Button
 					content={BUTTON_ADD_NEW_COURSE}
 					type={BUTTON_TYPE_BUTTON}
-					onClick={() => setAddNewCourse((toggle) => !toggle)}
+					onClick={() => createCourse()}
 				/>
 			</section>
 			{courseList.map((course) => {
@@ -34,11 +39,16 @@ const Courses = ({ setAddNewCourse }) => {
 						key={course.id}
 						{...course}
 						mockedAuthorsList={mockedAuthorsList}
+						history={history}
 					/>
 				);
 			})}
 		</>
 	);
+};
+
+Courses.propTypes = {
+	history: PropTypes.object.isRequired,
 };
 
 export default Courses;

@@ -64,6 +64,8 @@ const BUTTON_DELETE_AUTHOR = 'Delete author';
 const BUTTON_TYPE_SUBMIT = 'submit';
 const BUTTON_TYPE_BUTTON = 'button';
 
+const url = 'http://localhost:3000';
+
 export { mockedCoursesList, mockedAuthorsList };
 export {
 	BUTTON_LOGOUT,
@@ -77,3 +79,5 @@ export {
 	BUTTON_TYPE_SUBMIT,
 	BUTTON_TYPE_BUTTON,
 };
+
+export { url };

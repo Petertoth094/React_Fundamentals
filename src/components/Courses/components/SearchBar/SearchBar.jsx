@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
-import './searchBar.css';
+import PropTypes from 'prop-types';
+
 import Button from '../../../../common/Button/Button';
 import Input from '../../../../common/Input/Input';
 import { BUTTON_SEARCH } from '../../../../constants';
+
+import './searchBar.css';
 
 const SearchBar = ({ setCourseList, mockedCoursesList }) => {
 	const [query, setQuery] = useState('');
@@ -32,6 +35,12 @@ const SearchBar = ({ setCourseList, mockedCoursesList }) => {
 			<Button content={BUTTON_SEARCH} />
 		</form>
 	);
+};
+
+SearchBar.propTypes = {
+	setCourseList: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
+		.isRequired,
+	mockedCoursesList: PropTypes.array.isRequired,
 };
 
 export default SearchBar;

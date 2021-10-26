@@ -1,0 +1,35 @@
+.course-info {
+    padding: 20px;
+}
+
+.course-link {
+    text-decoration: none;
+    color: #000;
+}
+
+.course-title--center {
+    text-align: center;
+}
+
+.course-info-body {
+    display: flex;
+    gap: 10%;
+}
+
+.course-section-description {
+    width: 60%;
+}
+
+.course-section-info {
+    width: 30%;
+}
+.course-section-title {
+    font-weight: bold;
+}
+.course-section-title--block {
+    display: block;
+    margin-bottom: 8px;
+}
+.course-section-author {
+    display: block;
+}

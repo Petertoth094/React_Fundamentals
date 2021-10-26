@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { v4 as uuid_v4 } from 'uuid';
 
 import Button from '../../common/Button/Button';
@@ -17,7 +18,7 @@ import { FormValidator } from '../../helpers/formValidator';
 
 import './createCourse.css';
 
-const CreateCourse = ({ setAddNewCourse }) => {
+const CreateCourse = ({ history }) => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [authorName, setAuthorName] = useState('');
@@ -40,7 +41,7 @@ const CreateCourse = ({ setAddNewCourse }) => {
 				title,
 				description,
 				creationDate: getFormattedDate(new Date()),
-				duration,
+				duration: parseInt(duration),
 				authors: [...courseAuthors.map((authors) => authors.id)],
 			};
 			mockedCoursesList.push(newCourse);
@@ -51,7 +52,7 @@ const CreateCourse = ({ setAddNewCourse }) => {
 					mockedAuthorsList.push(author);
 				}
 			}
-			setAddNewCourse((toggle) => !toggle);
+			history.push('/courses');
 		} else {
 			alert(validatorMsg);
 		}
@@ -192,6 +193,10 @@ const CreateCourse = ({ setAddNewCourse }) => {
 			</div>
 		</form>
 	);
+};
+
+CreateCourse.propTypes = {
+	history: PropTypes.object.isRequired,
 };
 
 export default CreateCourse;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Button from '../../../../common/Button/Button';
 import { BUTTON_SHOW_COURSE } from '../../../../constants';
@@ -14,6 +15,7 @@ const CourseCard = ({
 	duration,
 	authors,
 	mockedAuthorsList,
+	history,
 }) => {
 	const renderAuthorsFun = (authors) => {
 		return authors
@@ -22,6 +24,10 @@ const CourseCard = ({
 				return mockedAuthorsList[index]?.name;
 			})
 			.join(',');
+	};
+
+	const showCourse = () => {
+		history.push(`/courses/${id}`);
 	};
 
 	return (
@@ -43,10 +49,21 @@ const CourseCard = ({
 					<span className='card-title'>Created: </span>
 					{creationDate}
 				</p>
-				<Button content={BUTTON_SHOW_COURSE} />
+				<Button content={BUTTON_SHOW_COURSE} onClick={() => showCourse(id)} />
 			</section>
 		</article>
 	);
+};
+
+CourseCard.propTypes = {
+	id: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
+	description: PropTypes.string.isRequired,
+	creationDate: PropTypes.string.isRequired,
+	duration: PropTypes.number.isRequired,
+	authors: PropTypes.arrayOf(PropTypes.string).isRequired,
+	mockedAuthorsList: PropTypes.array.isRequired,
+	history: PropTypes.object.isRequired,
 };
 
 export default CourseCard;

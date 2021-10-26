@@ -1,0 +1,26 @@
+.registration-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 75vh;
+
+}
+.registration-form {
+    width: 25vw;
+}
+
+label {
+    display: block;
+}
+
+.input-field  {
+    width: 100%;
+    margin: 10px 0px;
+}
+
+.registration-button {
+    display: block;
+    margin: 10px auto;
+    padding: 5px 50px;
+}
