@@ -12,7 +12,7 @@ import {
 	BUTTON_ADD_AUTHOR,
 	BUTTON_DELETE_AUTHOR,
 } from '../../constants';
-import { getFormattedDate } from '../../helpers/dateGeneratop';
+import { getFormattedDate } from '../../helpers/dateGenerator';
 import { pipeDuration } from '../../helpers/pipeDuration';
 import { FormValidator } from '../../helpers/formValidator';
 

@@ -3,7 +3,7 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 import { mockedCoursesList, mockedAuthorsList } from '../../constants';
-import { getDottedFormattedDate } from '../../helpers/dateGeneratop';
+import { getDottedFormattedDate } from '../../helpers/dateGenerator';
 import { pipeDuration } from '../../helpers/pipeDuration';
 
 import './courseInfo.css';
