@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './button.css';
 
@@ -13,6 +14,13 @@ const Button = ({
 			{content}
 		</button>
 	);
+};
+
+Button.propTypes = {
+	content: PropTypes.string.isRequired,
+	type: PropTypes.oneOf(['submit', 'button', 'reset']),
+	onClick: PropTypes.func,
+	buttonClassName: PropTypes.string,
 };
 
 export default Button;

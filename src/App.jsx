@@ -24,9 +24,6 @@ function App() {
 			<Header history={history} user={user} setUser={setUser} />
 			<main className='course-container'>
 				<Switch>
-					<Route exact path='/'>
-						{!user ? <Redirect to='/login' /> : <Redirect to='/courses' />}
-					</Route>
 					<Route exact path='/login'>
 						<Login history={history} setUser={setUser} />
 					</Route>
@@ -41,6 +38,9 @@ function App() {
 					</Route>
 					<Route exact path='/courses/:courseID'>
 						<CourseInfo history={history} />
+					</Route>
+					<Route path='/'>
+						{!user ? <Redirect to='/login' /> : <Redirect to='/courses' />}
 					</Route>
 				</Switch>
 			</main>
