@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
@@ -8,9 +8,11 @@ import { url } from '../../constants';
 
 import './login.css';
 
-const Login = ({ history, setUser }) => {
+const Login = ({ setUser }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+
+	let history = useHistory();
 
 	const fetchUser = async (login) => {
 		try {
@@ -81,7 +83,6 @@ const Login = ({ history, setUser }) => {
 };
 
 Login.propTypes = {
-	history: PropTypes.object.isRequired,
 	setUser: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
 };
 

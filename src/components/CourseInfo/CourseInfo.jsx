@@ -1,5 +1,4 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import { Link, useParams } from 'react-router-dom';
 
 import { mockedCoursesList, mockedAuthorsList } from '../../constants';
@@ -56,7 +55,5 @@ const CourseInfo = () => {
 		</article>
 	);
 };
-
-CourseInfo.propTypes = {};
 
 export default CourseInfo;

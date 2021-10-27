@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 
 import Button from '../../../../common/Button/Button';
 import { BUTTON_SHOW_COURSE } from '../../../../constants';
@@ -15,8 +16,9 @@ const CourseCard = ({
 	duration,
 	authors,
 	mockedAuthorsList,
-	history,
 }) => {
+	const history = useHistory();
+
 	const renderAuthorsFun = (authors) => {
 		return authors
 			.map((id) => {
@@ -63,7 +65,6 @@ CourseCard.propTypes = {
 	duration: PropTypes.number.isRequired,
 	authors: PropTypes.arrayOf(PropTypes.string).isRequired,
 	mockedAuthorsList: PropTypes.array.isRequired,
-	history: PropTypes.object.isRequired,
 };
 
 export default CourseCard;

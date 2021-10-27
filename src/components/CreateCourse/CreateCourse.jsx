@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { v4 as uuid_v4 } from 'uuid';
+import { useHistory } from 'react-router';
 
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
@@ -18,7 +18,7 @@ import { FormValidator } from '../../helpers/formValidator';
 
 import './createCourse.css';
 
-const CreateCourse = ({ history }) => {
+const CreateCourse = () => {
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [authorName, setAuthorName] = useState('');
@@ -26,6 +26,8 @@ const CreateCourse = ({ history }) => {
 
 	const [authors, setAuthors] = useState(mockedAuthorsList);
 	const [courseAuthors, setCourseAuthors] = useState([]);
+
+	const history = useHistory();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -193,10 +195,6 @@ const CreateCourse = ({ history }) => {
 			</div>
 		</form>
 	);
-};
-
-CreateCourse.propTypes = {
-	history: PropTypes.object.isRequired,
 };
 
 export default CreateCourse;

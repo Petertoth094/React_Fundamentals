@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
@@ -8,10 +7,12 @@ import { url } from '../../constants';
 
 import './registration.css';
 
-const Registration = ({ history }) => {
+const Registration = () => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+
+	const history = useHistory();
 
 	const fetchUser = async (newUser) => {
 		try {
@@ -83,7 +84,4 @@ const Registration = ({ history }) => {
 	);
 };
 
-Registration.propTypes = {
-	history: PropTypes.object.isRequired,
-};
 export default Registration;

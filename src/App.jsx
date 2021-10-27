@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
@@ -17,27 +17,25 @@ function App() {
 			: null
 	);
 
-	let history = useHistory();
-
 	return (
 		<div className='container'>
-			<Header history={history} user={user} setUser={setUser} />
+			<Header user={user} setUser={setUser} />
 			<main className='course-container'>
 				<Switch>
 					<Route exact path='/login'>
-						<Login history={history} setUser={setUser} />
+						<Login setUser={setUser} />
 					</Route>
 					<Route exact path='/registration'>
-						<Registration history={history} />
+						<Registration />
 					</Route>
 					<Route exact path='/courses'>
-						<Courses history={history} />
+						<Courses />
 					</Route>
 					<Route exact path='/courses/add'>
-						<CreateCourse history={history} />
+						<CreateCourse />
 					</Route>
 					<Route exact path='/courses/:courseID'>
-						<CourseInfo history={history} />
+						<CourseInfo />
 					</Route>
 					<Route path='/'>
 						{!user ? <Redirect to='/login' /> : <Redirect to='/courses' />}

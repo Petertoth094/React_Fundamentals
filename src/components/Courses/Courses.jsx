@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 
 import SearchBar from './components/SearchBar/SearchBar';
 import CourseCard from './components/CourseCard/CourseCard';
@@ -13,8 +13,10 @@ import {
 
 import './courses.css';
 
-const Courses = ({ history }) => {
+const Courses = () => {
 	const [courseList, setCourseList] = useState(mockedCoursesList);
+
+	const history = useHistory();
 
 	const createCourse = () => {
 		history.push(`/courses/add`);
@@ -45,10 +47,6 @@ const Courses = ({ history }) => {
 			})}
 		</>
 	);
-};
-
-Courses.propTypes = {
-	history: PropTypes.object.isRequired,
 };
 
 export default Courses;

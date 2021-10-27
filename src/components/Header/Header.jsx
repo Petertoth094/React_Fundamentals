@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 
 import Logo from './components/Logo/Logo';
 import Button from '../../common/Button/Button';
@@ -8,7 +9,9 @@ import logo from '../../assets/images/logo.png';
 
 import './header.css';
 
-const Header = ({ user, setUser, history }) => {
+const Header = ({ user, setUser }) => {
+	const history = useHistory();
+
 	const removeUser = () => {
 		window.localStorage.removeItem('user');
 		setUser(null);
@@ -30,7 +33,6 @@ const Header = ({ user, setUser, history }) => {
 Header.propTypes = {
 	user: PropTypes.object,
 	setUser: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
-	history: PropTypes.object.isRequired,
 };
 
 export default Header;
