@@ -74,7 +74,7 @@ const Registration = ({ history }) => {
 					valueHandler={password}
 					onChangeHandler={setPassword}
 				/>
-				<Button content='Registration' class_name='registration-button' />
+				<Button content='Registration' buttonClassName='registration-button' />
 			</form>
 			<p>
 				If you have an account you can link <Link to='/login'>Login</Link>

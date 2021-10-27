@@ -9,12 +9,12 @@ const Input = ({
 	required = false,
 	valueHandler,
 	onChangeHandler,
-	class_name = '',
-	labelClass_name = '',
+	inputClassName = '',
+	labelClassName = '',
 }) => {
 	return (
 		<>
-			<label htmlFor={name} className={`${labelClass_name}`}>
+			<label htmlFor={name} className={`${labelClassName}`}>
 				{labelText}
 			</label>
 			<input
@@ -22,7 +22,7 @@ const Input = ({
 				name={name}
 				id={name}
 				placeholder={placeholderText}
-				className={`input-field ${class_name}`}
+				className={`input-field ${inputClassName}`}
 				value={valueHandler}
 				required={required}
 				onChange={(e) => onChangeHandler(e.target.value)}
