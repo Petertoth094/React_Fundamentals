@@ -38,8 +38,7 @@ const SearchBar = ({ setCourseList, mockedCoursesList }) => {
 };
 
 SearchBar.propTypes = {
-	setCourseList: PropTypes.oneOfType([PropTypes.func, PropTypes.object])
-		.isRequired,
+	setCourseList: PropTypes.func.isRequired,
 	mockedCoursesList: PropTypes.array.isRequired,
 };
 

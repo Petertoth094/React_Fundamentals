@@ -22,8 +22,8 @@ const CourseCard = ({
 	const renderAuthorsFun = (authors) => {
 		return authors
 			.map((id) => {
-				const index = mockedAuthorsList.findIndex((author) => author.id === id);
-				return mockedAuthorsList[index]?.name;
+				const author = mockedAuthorsList.find((author) => author.id === id);
+				return author?.name;
 			})
 			.join(',');
 	};
@@ -51,7 +51,7 @@ const CourseCard = ({
 					<span className='card-title'>Created: </span>
 					{creationDate}
 				</p>
-				<Button content={BUTTON_SHOW_COURSE} onClick={() => showCourse(id)} />
+				<Button content={BUTTON_SHOW_COURSE} onClick={showCourse} />
 			</section>
 		</article>
 	);

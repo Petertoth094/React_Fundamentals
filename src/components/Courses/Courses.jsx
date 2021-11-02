@@ -32,7 +32,7 @@ const Courses = () => {
 				<Button
 					content={BUTTON_ADD_NEW_COURSE}
 					type={BUTTON_TYPE_BUTTON}
-					onClick={() => createCourse()}
+					onClick={createCourse}
 				/>
 			</section>
 			{courseList.map((course) => {
@@ -41,7 +41,6 @@ const Courses = () => {
 						key={course.id}
 						{...course}
 						mockedAuthorsList={mockedAuthorsList}
-						history={history}
 					/>
 				);
 			})}

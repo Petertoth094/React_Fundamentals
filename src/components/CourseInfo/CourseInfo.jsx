@@ -9,9 +9,9 @@ import './courseInfo.css';
 
 const CourseInfo = () => {
 	const { courseID } = useParams();
-	const course = mockedCoursesList.filter(
+	const course = mockedCoursesList.find(
 		(mockedCourse) => mockedCourse.id === courseID
-	)[0];
+	);
 
 	return (
 		<article className='course-info'>
@@ -40,12 +40,12 @@ const CourseInfo = () => {
 							Authors:
 						</span>
 						{course.authors.map((id) => {
-							const index = mockedAuthorsList.findIndex(
+							const author = mockedAuthorsList.find(
 								(mockedAuthor) => id === mockedAuthor.id
 							);
 							return (
 								<span className='course-section-author' key={id}>
-									{mockedAuthorsList[index].name}
+									{author.name}
 								</span>
 							);
 						})}
