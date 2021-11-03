@@ -10,22 +10,6 @@ export const fetchData = async (url) => {
 	}
 };
 
-export const userFetch = async (login) => {
-	try {
-		const response = await fetch(`${constants.URL}${constants.URL_LOGIN}`, {
-			method: 'POST',
-			body: JSON.stringify(login),
-			headers: {
-				'Content-Type': 'application/json',
-			},
-		});
-		const result = await response.json();
-		return result;
-	} catch (error) {
-		console.log(error);
-	}
-};
-
 export const postUser = async (user, url) => {
 	try {
 		const response = await fetch(`${constants.URL}${url}`, {
