@@ -6,12 +6,12 @@
 }
 
 .course-card-header {
-    width: 70%;
+    width: 65%;
     padding: 0px 15px;
 }
 
 .course-card-info {
-    width: 30%;
+    width: 35%;
     padding: 10px 15px;
     display: inline-block;
 }
@@ -26,9 +26,13 @@
     text-overflow: ellipsis;
 }
 .course-card-info button {
-    display: block;
-    margin: 0px auto;
-    padding: 8px 30px;
+    display: inline-block;
+    margin: 6px 4px;
+    height: 40px;
+  }
+
+  .course-card-info button:first-of-type {
+    padding: 0px 30px;
   }
 
 /* .course-card {
