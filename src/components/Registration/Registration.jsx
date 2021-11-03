@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
+import { URL_LOGIN, URL_REGISER } from '../../constants';
 
 import { postUser } from '../../services';
 
@@ -23,9 +24,9 @@ const Registration = () => {
 				password,
 				email,
 			};
-			postUser(newUser, '/register').then((data) => {
+			postUser(newUser, URL_REGISER).then((data) => {
 				if (data?.successful) {
-					history.push('/login');
+					history.push(URL_LOGIN);
 				} else {
 					alert(data?.errors);
 				}

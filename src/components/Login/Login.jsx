@@ -3,10 +3,11 @@ import { Link, useHistory } from 'react-router-dom';
 
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
-import { userFetch } from '../../services';
 import { useDispatch } from 'react-redux';
 
 import { setLogin } from '../../store/user/actionCreators';
+import { URL_COURSES, URL_LOGIN } from '../../constants';
+import { postUser } from '../../services';
 
 import './login.css';
 
@@ -24,10 +25,10 @@ const Login = () => {
 				email,
 				password,
 			};
-			userFetch(login).then((data) => {
+			postUser(login, URL_LOGIN).then((data) => {
 				if (data?.successful) {
 					dispatch(setLogin(data.result, data.user));
-					history.push('/courses');
+					history.push(URL_COURSES);
 				} else {
 					alert('Wrong username or password!');
 				}

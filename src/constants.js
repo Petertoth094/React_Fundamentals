@@ -69,6 +69,7 @@ const BUTTON_TYPE_BUTTON = 'button';
 export const URL = 'http://localhost:3000';
 export const URL_LOGIN = '/login';
 export const URL_REGISER = '/register';
+export const URL_COURSES = '/courses';
 export const URL_GET_COURSES_ALL = '/courses/all';
 export const URL_GET_AUTHORS_ALL = '/authors/all';
 
