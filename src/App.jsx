@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './components/Header/Header';
@@ -11,6 +12,7 @@ import './App.css';
 
 function App() {
 	const user = window.localStorage.getItem('user') || null;
+	const [firstRender, setFirstRender] = useState(true);
 
 	return (
 		<div className='container'>
@@ -24,7 +26,10 @@ function App() {
 						<Registration />
 					</Route>
 					<Route exact path='/courses'>
-						<Courses />
+						<Courses
+							firstRender={firstRender}
+							setFirstRender={setFirstRender}
+						/>
 					</Route>
 					<Route exact path='/courses/add'>
 						<CreateCourse />

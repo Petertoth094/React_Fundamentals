@@ -16,24 +16,3 @@ const coursesReducer = (state = coursesInitialState, action) => {
 };
 
 export default coursesReducer;
-
-// const coursesReducer = (state = coursesInitialState, action) => {
-// 	switch (action.type) {
-// 		case actions.GET_COURSES:
-// 			return { ...state, courses: action.payload };
-// 		case actions.DELETE_COURSE:
-// 			return {
-// 				...state,
-// 				courses: state.courses.filter(
-// 					(course) => course.id !== action.payload.id
-// 				),
-// 			};
-// 		case actions.UPDATE_COURSE:
-// 			return {
-// 				...state,
-// 				courses: [...state.courses, action.payload],
-// 			};
-// 		default:
-// 			return { ...state };
-// 	}
-// };

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -17,7 +18,7 @@ import { getCourse } from '../../store/courses/actionCreators';
 
 import './courses.css';
 
-const Courses = () => {
+const Courses = ({ firstRender, setFirstRender }) => {
 	const [courseList, setCourseList] = useState([]);
 	const courses = useSelector(getCourses);
 
@@ -34,17 +35,17 @@ const Courses = () => {
 				const data = await fetchData(URL_GET_COURSES_ALL);
 				if (data?.successful) {
 					dispatch(getCourse(data.result));
-					setCourseList(data.result);
+					setFirstRender(!firstRender);
 				}
 			} catch (error) {
 				console.log('COURSE Fetch error');
 			}
 		};
-		if (courses.length === 0) {
+		if (firstRender) {
 			getData();
 		}
 		setCourseList(courses);
-	}, [dispatch, courses]);
+	}, [dispatch, courses, firstRender, setFirstRender]);
 
 	return (
 		<>
@@ -62,6 +63,10 @@ const Courses = () => {
 				})}
 		</>
 	);
+};
+Courses.propTypes = {
+	firstRender: PropTypes.bool.isRequired,
+	setFirstRender: PropTypes.func.isRequired,
 };
 
 export default Courses;
