@@ -55,6 +55,8 @@ const mockedAuthorsList = [
 
 const BUTTON_LOGOUT = 'Logout';
 const BUTTON_SEARCH = 'Search';
+const BUTTON_UPDATE = 'Update';
+const BUTTON_DELETE = 'Delete';
 const BUTTON_ADD_NEW_COURSE = 'Add new course';
 const BUTTON_SHOW_COURSE = 'Show course';
 const BUTTON_CREATE_NEW_AUTHOR = 'Create author';
@@ -64,7 +66,11 @@ const BUTTON_DELETE_AUTHOR = 'Delete author';
 const BUTTON_TYPE_SUBMIT = 'submit';
 const BUTTON_TYPE_BUTTON = 'button';
 
-const url = 'http://localhost:3000';
+export const URL = 'http://localhost:3000';
+export const URL_LOGIN = '/login';
+export const URL_REGISER = '/register';
+export const URL_GET_COURSES_ALL = '/courses/all';
+export const URL_GET_AUTHORS_ALL = '/authors/all';
 
 export { mockedCoursesList, mockedAuthorsList };
 export {
@@ -78,6 +84,6 @@ export {
 	BUTTON_DELETE_AUTHOR,
 	BUTTON_TYPE_SUBMIT,
 	BUTTON_TYPE_BUTTON,
+	BUTTON_UPDATE,
+	BUTTON_DELETE,
 };
-
-export { url };

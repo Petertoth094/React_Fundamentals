@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
 import Button from '../../../../common/Button/Button';
 import Input from '../../../../common/Input/Input';
 import { BUTTON_SEARCH } from '../../../../constants';
+import { getCourses } from '../../../../services';
 
 import './searchBar.css';
 
-const SearchBar = ({ setCourseList, mockedCoursesList }) => {
+const SearchBar = ({ setCourseList }) => {
 	const [query, setQuery] = useState('');
+
+	const courses = useSelector(getCourses);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const tempList = mockedCoursesList.filter((course) => {
+		const tempList = courses.filter((course) => {
 			const regex = new RegExp(`${query}`, 'gi');
 			if (regex.test(course.id) || regex.test(course.title)) {
 				return true;
@@ -39,7 +43,6 @@ const SearchBar = ({ setCourseList, mockedCoursesList }) => {
 
 SearchBar.propTypes = {
 	setCourseList: PropTypes.func.isRequired,
-	mockedCoursesList: PropTypes.array.isRequired,
 };
 
 export default SearchBar;

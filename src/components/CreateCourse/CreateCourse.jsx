@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { v4 as uuid_v4 } from 'uuid';
 import { useHistory } from 'react-router';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import {
-	mockedAuthorsList,
-	mockedCoursesList,
 	BUTTON_CREATE_NEW_COURSE,
 	BUTTON_CREATE_NEW_AUTHOR,
 	BUTTON_ADD_AUTHOR,
@@ -15,19 +14,25 @@ import {
 import { getFormattedDate } from '../../helpers/dateGenerator';
 import { pipeDuration } from '../../helpers/pipeDuration';
 import { FormValidator } from '../../helpers/formValidator';
+import { getAuthors } from '../../services';
+
+import { saveNewAuthor } from '../../store/authors/actionCreators';
+import { saveNewCourse } from '../../store/courses/actionCreators';
 
 import './createCourse.css';
 
 const CreateCourse = () => {
+	const authors = useSelector(getAuthors);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [authorName, setAuthorName] = useState('');
 	const [duration, setDuration] = useState('');
 
-	const [authors, setAuthors] = useState(mockedAuthorsList);
+	const [listOfAuthors, setListOfAuthors] = useState(authors || []);
 	const [courseAuthors, setCourseAuthors] = useState([]);
 
 	const history = useHistory();
+	const dispatch = useDispatch();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -46,14 +51,7 @@ const CreateCourse = () => {
 				duration: parseInt(duration),
 				authors: [...courseAuthors.map((authors) => authors.id)],
 			};
-			mockedCoursesList.push(newCourse);
-
-			const AllAuthors = [...authors, ...courseAuthors];
-			for (let author of AllAuthors) {
-				if (!mockedAuthorsList.includes(author)) {
-					mockedAuthorsList.push(author);
-				}
-			}
+			dispatch(saveNewCourse(newCourse));
 			history.push('/courses');
 		} else {
 			alert(validatorMsg);
@@ -66,7 +64,8 @@ const CreateCourse = () => {
 				id: uuid_v4(),
 				name: authorName,
 			};
-			setAuthors((oldAuthors) => {
+			dispatch(saveNewAuthor(newAuthor));
+			setListOfAuthors((oldAuthors) => {
 				return [...oldAuthors, newAuthor];
 			});
 			setAuthorName('');
@@ -76,9 +75,9 @@ const CreateCourse = () => {
 	};
 
 	const addCourseAuthor = (id) => {
-		const tmpAuthors = authors.filter((author) => author.id === id);
+		const tmpAuthors = listOfAuthors.filter((author) => author.id === id);
 		setCourseAuthors((oldCouseAuthors) => [...oldCouseAuthors, ...tmpAuthors]);
-		setAuthors((oldAuthors) => {
+		setListOfAuthors((oldAuthors) => {
 			let newOldAuthors = oldAuthors.filter((oldauth) => oldauth.id !== id);
 			return [...newOldAuthors];
 		});
@@ -88,7 +87,7 @@ const CreateCourse = () => {
 		const newAuthor = courseAuthors.filter(
 			(courseAuthor) => courseAuthor.id === id
 		);
-		setAuthors((oldAuthors) => [...oldAuthors, ...newAuthor]);
+		setListOfAuthors((oldAuthors) => [...oldAuthors, ...newAuthor]);
 		setCourseAuthors((oldCourseAuthors) => {
 			const newCourseAuthors = oldCourseAuthors.filter(
 				(oldAuth) => oldAuth.id !== id
@@ -154,10 +153,10 @@ const CreateCourse = () => {
 				</div>
 				<div className='course-authors--render'>
 					<h2 className='author-title'>Authors</h2>
-					{authors.length === 0 ? (
+					{listOfAuthors.length === 0 ? (
 						<p className='author-title'>Author list is empty</p>
 					) : (
-						authors.map((author) => {
+						listOfAuthors.map((author) => {
 							return (
 								<div key={author.id} className='couse-authors--selectable'>
 									<p>

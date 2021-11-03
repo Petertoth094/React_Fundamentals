@@ -1,45 +1,21 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { Link, useHistory } from 'react-router-dom';
 
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
-import { url } from '../../constants';
+import { userFetch } from '../../services';
+import { useDispatch } from 'react-redux';
+
+import { setLogin } from '../../store/user/actionCreators';
 
 import './login.css';
 
-const Login = ({ setUser }) => {
+const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
 	let history = useHistory();
-
-	const fetchUser = async (login) => {
-		try {
-			const response = await fetch(`${url}/login`, {
-				method: 'POST',
-				body: JSON.stringify(login),
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
-			const result = await response.json();
-			if (result?.successful) {
-				const userData = {
-					email: result.user.email,
-					name: result.user.name,
-					token: result.result,
-				};
-				window.localStorage.setItem('user', JSON.stringify(userData));
-				setUser(userData);
-				history.push('/courses');
-			} else {
-				alert(result.result);
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	};
+	const dispatch = useDispatch();
 
 	const loginUser = (e) => {
 		e.preventDefault();
@@ -48,7 +24,14 @@ const Login = ({ setUser }) => {
 				email,
 				password,
 			};
-			fetchUser(login);
+			userFetch(login).then((data) => {
+				if (data?.successful) {
+					dispatch(setLogin(data.result, data.user));
+					history.push('/courses');
+				} else {
+					alert('Wrong username or password!');
+				}
+			});
 		} else {
 			alert('Add login credentials');
 		}
@@ -80,10 +63,6 @@ const Login = ({ setUser }) => {
 			</p>
 		</div>
 	);
-};
-
-Login.propTypes = {
-	setUser: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
 };
 
 export default Login;

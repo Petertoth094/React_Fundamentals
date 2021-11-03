@@ -3,7 +3,8 @@ import { Link, useHistory } from 'react-router-dom';
 
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
-import { url } from '../../constants';
+
+import { postUser } from '../../services';
 
 import './registration.css';
 
@@ -14,26 +15,6 @@ const Registration = () => {
 
 	const history = useHistory();
 
-	const fetchUser = async (newUser) => {
-		try {
-			const response = await fetch(`${url}/register`, {
-				method: 'POST',
-				body: JSON.stringify(newUser),
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			});
-			const result = await response.json();
-			if (result.successful) {
-				history.push('/login');
-			} else {
-				alert(result.errors);
-			}
-		} catch (error) {
-			console.log(error);
-		}
-	};
-
 	const registerUser = (e) => {
 		e.preventDefault();
 		if (name !== '' && email !== '' && password.length > 0) {
@@ -42,7 +23,13 @@ const Registration = () => {
 				password,
 				email,
 			};
-			fetchUser(newUser);
+			postUser(newUser, '/register').then((data) => {
+				if (data?.successful) {
+					history.push('/login');
+				} else {
+					alert(data?.errors);
+				}
+			});
 		} else {
 			alert('Input the neccesary data');
 		}

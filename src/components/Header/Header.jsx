@@ -1,38 +1,39 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
+import { useSelector, useDispatch } from 'react-redux';
 
 import Logo from './components/Logo/Logo';
 import Button from '../../common/Button/Button';
 import { BUTTON_LOGOUT } from '../../constants';
 import logo from '../../assets/images/logo.png';
 
+import { getUser } from '../../services';
+import { setLogout } from '../../store/user/actionCreators';
+
 import './header.css';
 
-const Header = ({ user, setUser }) => {
+const Header = () => {
 	const history = useHistory();
 
+	const user = useSelector(getUser);
+	const dispatch = useDispatch();
+
 	const removeUser = () => {
-		window.localStorage.removeItem('user');
-		setUser(null);
+		dispatch(setLogout());
 		history.push('/login');
 	};
 
 	return (
 		<header className='header-container'>
 			<Logo logo={logo} />
-			{user && (
+			{user.token && (
 				<>
-					<h2 className='header-title--right'>{user?.name}</h2>
+					<h2 className='header-title--right'>{user.name}</h2>
 					<Button content={BUTTON_LOGOUT} onClick={removeUser} />
 				</>
 			)}
 		</header>
 	);
-};
-Header.propTypes = {
-	user: PropTypes.object,
-	setUser: PropTypes.oneOfType([PropTypes.func, PropTypes.object]).isRequired,
 };
 
 export default Header;

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './components/Header/Header';
@@ -11,19 +10,15 @@ import CourseInfo from './components/CourseInfo/CourseInfo';
 import './App.css';
 
 function App() {
-	const [user, setUser] = useState(
-		window.localStorage.getItem('user')
-			? JSON.parse(window.localStorage.getItem('user'))
-			: null
-	);
+	const user = window.localStorage.getItem('user') || null;
 
 	return (
 		<div className='container'>
-			<Header user={user} setUser={setUser} />
+			<Header />
 			<main className='course-container'>
 				<Switch>
 					<Route exact path='/login'>
-						<Login setUser={setUser} />
+						<Login />
 					</Route>
 					<Route exact path='/registration'>
 						<Registration />

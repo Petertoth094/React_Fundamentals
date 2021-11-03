@@ -17,7 +17,7 @@ const Button = ({
 };
 
 Button.propTypes = {
-	content: PropTypes.string.isRequired,
+	content: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
 	type: PropTypes.oneOf(['submit', 'button', 'reset']),
 	onClick: PropTypes.func,
 	buttonClassName: PropTypes.string,
