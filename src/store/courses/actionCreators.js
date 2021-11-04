@@ -30,3 +30,21 @@ export const saveNewCourse = (course) => {
 		},
 	};
 };
+
+export const updateCourse = (course) => {
+	const { id, title, description, creationDate, duration, authors } = course;
+	return {
+		type: actions.UPDATE_COURSE,
+		payload: {
+			removeID: id,
+			updatedCourse: {
+				id,
+				title,
+				description,
+				creationDate,
+				duration,
+				authors,
+			},
+		},
+	};
+};
