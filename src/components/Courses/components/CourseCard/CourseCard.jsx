@@ -9,10 +9,11 @@ import Button from '../../../../common/Button/Button';
 
 import { BUTTON_SHOW_COURSE, URL_GET_AUTHORS_ALL } from '../../../../constants';
 import { pipeDuration } from '../../../../helpers/pipeDuration';
-import { fetchData, getAuthors } from '../../../../services';
+import { fetchData } from '../../../../services';
 
 import { getAuthor } from '../../../../store/authors/actionCreators';
 import { deleteCourse } from '../../../../store/courses/actionCreators';
+import { getAuthors } from '../../../../store/selectors';
 
 import './course-card.css';
 

@@ -7,8 +7,8 @@ import Button from '../../common/Button/Button';
 import { BUTTON_LOGOUT } from '../../constants';
 import logo from '../../assets/images/logo.png';
 
-import { getUser } from '../../services';
 import { setLogout } from '../../store/user/actionCreators';
+import { getUser } from '../../store/selectors';
 
 import './header.css';
 

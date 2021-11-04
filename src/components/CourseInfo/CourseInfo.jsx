@@ -4,7 +4,8 @@ import { useSelector } from 'react-redux';
 
 import { getDottedFormattedDate } from '../../helpers/dateGenerator';
 import { pipeDuration } from '../../helpers/pipeDuration';
-import { getAuthors, getCourses } from '../../services';
+
+import { getAuthors, getCourses } from '../../store/selectors';
 
 import './courseInfo.css';
 

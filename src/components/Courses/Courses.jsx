@@ -12,9 +12,10 @@ import {
 	BUTTON_TYPE_BUTTON,
 	URL_GET_COURSES_ALL,
 } from '../../constants';
-import { fetchData, getCourses } from '../../services';
+import { fetchData } from '../../services';
 
 import { getCourse } from '../../store/courses/actionCreators';
+import { getCourses } from '../../store/selectors';
 
 import './courses.css';
 

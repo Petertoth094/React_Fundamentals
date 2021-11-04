@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import Button from '../../../../common/Button/Button';
 import Input from '../../../../common/Input/Input';
 import { BUTTON_SEARCH } from '../../../../constants';
-import { getCourses } from '../../../../services';
+import { getCourses } from '../../../../store/selectors';
 
 import './searchBar.css';
 

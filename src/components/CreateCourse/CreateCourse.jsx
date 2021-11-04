@@ -14,10 +14,10 @@ import {
 import { getFormattedDate } from '../../helpers/dateGenerator';
 import { pipeDuration } from '../../helpers/pipeDuration';
 import { FormValidator } from '../../helpers/formValidator';
-import { getAuthors } from '../../services';
 
 import { saveNewAuthor } from '../../store/authors/actionCreators';
 import { saveNewCourse } from '../../store/courses/actionCreators';
+import { getAuthors } from '../../store/selectors';
 
 import './createCourse.css';
 
