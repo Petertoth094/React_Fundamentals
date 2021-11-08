@@ -3,7 +3,7 @@ import * as actions from './actionTypes';
 export const getCourse = (courses) => {
 	return {
 		type: actions.GET_COURSES,
-		payload: [...courses],
+		payload: courses,
 	};
 };
 
@@ -36,15 +36,12 @@ export const updateCourse = (course) => {
 	return {
 		type: actions.UPDATE_COURSE,
 		payload: {
-			removeID: id,
-			updatedCourse: {
-				id,
-				title,
-				description,
-				creationDate,
-				duration,
-				authors,
-			},
+			id,
+			title,
+			description,
+			creationDate,
+			duration,
+			authors,
 		},
 	};
 };

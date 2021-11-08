@@ -5,18 +5,17 @@ const coursesInitialState = [];
 const coursesReducer = (state = coursesInitialState, action) => {
 	switch (action.type) {
 		case actions.GET_COURSES:
-			return [...action.payload];
+			return action.payload;
 		case actions.DELETE_COURSE:
-			return [...state.filter((course) => course.id !== action.payload.id)];
+			return state.filter((course) => course.id !== action.payload.id);
 		case actions.SAVE_NEW_COURSE:
 			return [...state, action.payload];
 		case actions.UPDATE_COURSE:
-			return [
-				...state.filter((course) => course.id !== action.payload.removeID),
-				...action.payload.updatedCourse,
-			];
+			return state.map((course) =>
+				course.id === action.payload.id ? action.payload : course
+			);
 		default:
-			return [...state];
+			return state;
 	}
 };
 

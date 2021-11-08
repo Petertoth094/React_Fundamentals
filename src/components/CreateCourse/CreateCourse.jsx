@@ -61,8 +61,8 @@ const CreateCourse = () => {
 	const createAuthor = () => {
 		if (authorName.length !== 0) {
 			const newAuthor = {
-				id: uuid_v4(),
 				name: authorName,
+				id: uuid_v4(),
 			};
 			dispatch(saveNewAuthor(newAuthor));
 			setListOfAuthors((oldAuthors) => {
