@@ -26,7 +26,7 @@ const Courses = ({ firstRender, setFirstRender }) => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 
-	const createCourse = () => {
+	const CourseForm = () => {
 		history.push(`/courses/add`);
 	};
 
@@ -55,7 +55,7 @@ const Courses = ({ firstRender, setFirstRender }) => {
 				<Button
 					content={BUTTON_ADD_NEW_COURSE}
 					type={BUTTON_TYPE_BUTTON}
-					onClick={createCourse}
+					onClick={CourseForm}
 				/>
 			</section>
 			{courseList &&

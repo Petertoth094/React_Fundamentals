@@ -3,7 +3,7 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './components/Header/Header';
 import Courses from './components/Courses/Courses';
-import CreateCourse from './components/CreateCourse/CreateCourse';
+import CourseForm from './components/CourseForm/CourseForm';
 import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
@@ -32,7 +32,7 @@ function App() {
 						/>
 					</Route>
 					<Route exact path='/courses/add'>
-						<CreateCourse />
+						<CourseForm />
 					</Route>
 					<Route exact path='/courses/:courseID'>
 						<CourseInfo />

@@ -19,9 +19,9 @@ import { saveNewAuthor } from '../../store/authors/actionCreators';
 import { saveNewCourse } from '../../store/courses/actionCreators';
 import { getAuthors } from '../../store/selectors';
 
-import './createCourse.css';
+import './CourseForm.css';
 
-const CreateCourse = () => {
+const CourseForm = () => {
 	const authors = useSelector(getAuthors);
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
@@ -196,4 +196,4 @@ const CreateCourse = () => {
 	);
 };
 
-export default CreateCourse;
+export default CourseForm;
