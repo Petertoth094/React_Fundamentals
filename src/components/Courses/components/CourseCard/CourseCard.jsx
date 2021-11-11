@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import { HiPencil } from 'react-icons/hi';
@@ -7,13 +7,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Button from '../../../../common/Button/Button';
 
-import { BUTTON_SHOW_COURSE, URL_GET_AUTHORS_ALL } from '../../../../constants';
+import { BUTTON_SHOW_COURSE } from '../../../../constants';
 import { pipeDuration } from '../../../../helpers/pipeDuration';
-import { fetchData } from '../../../../services';
 
-import { getAuthor } from '../../../../store/authors/actionCreators';
-import { deleteCourse } from '../../../../store/courses/actionCreators';
-import { getAuthors } from '../../../../store/selectors';
+import { getAuthors, getUser } from '../../../../store/selectors';
+import { deleteCourseFun } from '../../../../store/courses/thunk';
 
 import './course-card.css';
 
@@ -28,9 +26,14 @@ const CourseCard = ({
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const authors = useSelector(getAuthors);
+	const user = useSelector(getUser);
 
 	const handleDelCourse = () => {
-		dispatch(deleteCourse(id));
+		dispatch(deleteCourseFun(id, user.token));
+	};
+
+	const handleUpdateCourse = () => {
+		history.push(`courses/update/${id}`);
 	};
 
 	const renderAuthorsFun = (IdAuthors) => {
@@ -43,22 +46,6 @@ const CourseCard = ({
 	const showCourse = () => {
 		history.push(`/courses/${id}`);
 	};
-
-	useEffect(() => {
-		const getData = async () => {
-			try {
-				const data = await fetchData(URL_GET_AUTHORS_ALL);
-				if (data?.successful) {
-					dispatch(getAuthor(data.result));
-				}
-			} catch (error) {
-				console.log('AUTHORS FETCH error');
-			}
-		};
-		if (authors.length === 0) {
-			getData();
-		}
-	}, [dispatch, authors]);
 
 	return (
 		<article className='course-card'>
@@ -80,8 +67,12 @@ const CourseCard = ({
 					{creationDate}
 				</p>
 				<Button content={BUTTON_SHOW_COURSE} onClick={showCourse} />
-				<Button content={<HiPencil />} />
-				<Button content={<FaTrash />} onClick={handleDelCourse} />
+				{user.role === 'admin' && (
+					<>
+						<Button content={<HiPencil />} onClick={handleUpdateCourse} />
+						<Button content={<FaTrash />} onClick={handleDelCourse} />
+					</>
+				)}
 			</section>
 		</article>
 	);

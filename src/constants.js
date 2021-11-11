@@ -53,10 +53,13 @@ const mockedAuthorsList = [
 	},
 ];
 
+export const localeUser = window.localStorage.getItem('user');
+
 const BUTTON_LOGOUT = 'Logout';
 const BUTTON_SEARCH = 'Search';
 const BUTTON_UPDATE = 'Update';
 const BUTTON_DELETE = 'Delete';
+const BUTTON_UPDATE_COURSE = 'Update Course';
 const BUTTON_ADD_NEW_COURSE = 'Add new course';
 const BUTTON_SHOW_COURSE = 'Show course';
 const BUTTON_CREATE_NEW_AUTHOR = 'Create author';
@@ -68,10 +71,14 @@ const BUTTON_TYPE_BUTTON = 'button';
 
 export const URL = 'http://localhost:3000';
 export const URL_LOGIN = '/login';
+export const URL_LOGOUT = '/logout';
 export const URL_REGISER = '/register';
 export const URL_COURSES = '/courses';
 export const URL_GET_COURSES_ALL = '/courses/all';
 export const URL_GET_AUTHORS_ALL = '/authors/all';
+export const URL_POST_AUTHORS = '/authors/add';
+export const URL_POST_COURSE = '/courses/add';
+export const URL_USERS_ME = '/users/me';
 
 export { mockedCoursesList, mockedAuthorsList };
 export {
@@ -87,4 +94,5 @@ export {
 	BUTTON_TYPE_BUTTON,
 	BUTTON_UPDATE,
 	BUTTON_DELETE,
+	BUTTON_UPDATE_COURSE,
 };

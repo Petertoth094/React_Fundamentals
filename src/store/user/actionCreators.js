@@ -17,3 +17,10 @@ export const setLogout = () => {
 		type: actions.LOGOUT,
 	};
 };
+
+export const updateLogin = (payload) => {
+	return {
+		type: actions.UPDATE,
+		payload,
+	};
+};

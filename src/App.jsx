@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 import Header from './components/Header/Header';
@@ -7,12 +6,12 @@ import CourseForm from './components/CourseForm/CourseForm';
 import Registration from './components/Registration/Registration';
 import Login from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
+import PrivateRouter from './components/PrivateRouter/PrivateRouter';
 
 import './App.css';
 
 function App() {
 	const user = window.localStorage.getItem('user') || null;
-	const [firstRender, setFirstRender] = useState(true);
 
 	return (
 		<div className='container'>
@@ -26,14 +25,14 @@ function App() {
 						<Registration />
 					</Route>
 					<Route exact path='/courses'>
-						<Courses
-							firstRender={firstRender}
-							setFirstRender={setFirstRender}
-						/>
+						<Courses />
 					</Route>
-					<Route exact path='/courses/add'>
-						<CourseForm />
-					</Route>
+					<PrivateRouter exact path='/courses/add' component={CourseForm} />
+					<PrivateRouter
+						exact
+						path='/courses/update/:courseID'
+						component={CourseForm}
+					/>
 					<Route exact path='/courses/:courseID'>
 						<CourseInfo />
 					</Route>
@@ -47,3 +46,17 @@ function App() {
 }
 
 export default App;
+
+/**
+ * admin@email.com
+ * admin123
+ */
+
+/**
+ * 
+{
+  "name": "lajoska",
+  "email": "lajoska@email.com",
+  "password": "lajoska"
+}
+ */

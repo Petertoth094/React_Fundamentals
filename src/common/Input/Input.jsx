@@ -36,7 +36,7 @@ Input.propTypes = {
 	placeholderText: PropTypes.string,
 	type: PropTypes.string,
 	name: PropTypes.string,
-	valueHandler: PropTypes.string,
+	valueHandler: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	onChangeHandler: PropTypes.func,
 	inputClassName: PropTypes.string,
 	labelClassName: PropTypes.string,

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { v4 as uuid_v4 } from 'uuid';
-import { useHistory } from 'react-router';
+import React, { useEffect, useState } from 'react';
+import { useHistory, useParams } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
+import { v4 as uuid_v4 } from 'uuid';
 
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
@@ -10,19 +10,22 @@ import {
 	BUTTON_CREATE_NEW_AUTHOR,
 	BUTTON_ADD_AUTHOR,
 	BUTTON_DELETE_AUTHOR,
+	BUTTON_UPDATE_COURSE,
 } from '../../constants';
 import { getFormattedDate } from '../../helpers/dateGenerator';
 import { pipeDuration } from '../../helpers/pipeDuration';
 import { FormValidator } from '../../helpers/formValidator';
 
-import { saveNewAuthor } from '../../store/authors/actionCreators';
-import { saveNewCourse } from '../../store/courses/actionCreators';
-import { getAuthors } from '../../store/selectors';
+import { getAuthors, getCourses } from '../../store/selectors';
+import { createCourse, updateCourseFun } from '../../store/courses/thunk';
+import { fetchAuthors, postNewAuthor } from '../../store/authors/thunk';
 
-import './CourseForm.css';
+import './courseForm.css';
 
 const CourseForm = () => {
 	const authors = useSelector(getAuthors);
+	const courses = useSelector(getCourses);
+
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
 	const [authorName, setAuthorName] = useState('');
@@ -32,6 +35,9 @@ const CourseForm = () => {
 	const [courseAuthors, setCourseAuthors] = useState([]);
 
 	const history = useHistory();
+	const { courseID } = useParams();
+	const updateThisCourse = courses.find((course) => course.id === courseID);
+
 	const dispatch = useDispatch();
 
 	const handleSubmit = (e) => {
@@ -44,14 +50,21 @@ const CourseForm = () => {
 		);
 		if (validatorMsg.length === 0) {
 			const newCourse = {
-				id: uuid_v4(),
 				title,
 				description,
-				creationDate: getFormattedDate(new Date()),
+				creationDate: courseID
+					? updateThisCourse.creationDate
+					: getFormattedDate(new Date()),
 				duration: parseInt(duration),
 				authors: [...courseAuthors.map((authors) => authors.id)],
 			};
-			dispatch(saveNewCourse(newCourse));
+			if (courseID) {
+				dispatch(
+					updateCourseFun(newCourse, courseID, localStorage.getItem('user'))
+				);
+			} else {
+				dispatch(createCourse(newCourse, window.localStorage.getItem('user')));
+			}
 			history.push('/courses');
 		} else {
 			alert(validatorMsg);
@@ -64,7 +77,11 @@ const CourseForm = () => {
 				name: authorName,
 				id: uuid_v4(),
 			};
-			dispatch(saveNewAuthor(newAuthor));
+			dispatch(
+				postNewAuthor(window.localStorage.getItem('user'), {
+					name: newAuthor.name,
+				})
+			);
 			setListOfAuthors((oldAuthors) => {
 				return [...oldAuthors, newAuthor];
 			});
@@ -96,6 +113,23 @@ const CourseForm = () => {
 		});
 	};
 
+	useEffect(() => {
+		if (courseID) {
+			const updateThisCourse = courses.find((course) => course.id === courseID);
+			setTitle(updateThisCourse.title);
+			setDescription(updateThisCourse.description);
+			setDuration(updateThisCourse.duration);
+			setListOfAuthors(
+				authors.filter(
+					(author) => !updateThisCourse.authors.includes(author.id)
+				)
+			);
+			setCourseAuthors(
+				authors.filter((author) => updateThisCourse.authors.includes(author.id))
+			);
+		}
+	}, [authors, courseID, courses]);
+
 	return (
 		<form onSubmit={handleSubmit} className='course-form'>
 			<div className='create-course-header'>
@@ -107,7 +141,7 @@ const CourseForm = () => {
 					onChangeHandler={setTitle}
 				/>
 				<Button
-					content={BUTTON_CREATE_NEW_COURSE}
+					content={courseID ? BUTTON_UPDATE_COURSE : BUTTON_CREATE_NEW_COURSE}
 					className='course-btn--submit'
 				/>
 				<label className='label' htmlFor='description'>

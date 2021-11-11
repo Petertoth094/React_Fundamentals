@@ -4,16 +4,18 @@ const userInitialState = {
 	isAuth: false,
 	name: '',
 	email: '',
-	token: window.localStorage.getItem('user') || '',
+	token: '',
+	role: '',
 };
 
 const userReducer = (state = userInitialState, action) => {
 	switch (action.type) {
 		case actions.LOGIN:
-			window.localStorage.setItem('user', JSON.stringify(action.payload.token));
+			window.localStorage.setItem('user', action.payload.token);
 			return {
+				...state,
 				isAuth: true,
-				name: action.payload.name,
+				name: action.payload.name || '',
 				email: action.payload.email,
 				token: action.payload.token,
 			};
@@ -23,6 +25,17 @@ const userReducer = (state = userInitialState, action) => {
 				...userInitialState,
 				token: '',
 			};
+		case actions.UPDATE: {
+			const { name, email, role } = action.payload;
+			return {
+				...state,
+				isAuth: true,
+				name,
+				email,
+				role,
+				token: window.localStorage.getItem('user'),
+			};
+		}
 		default:
 			return state;
 	}

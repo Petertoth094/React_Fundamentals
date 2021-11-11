@@ -7,8 +7,8 @@ import Button from '../../common/Button/Button';
 import { BUTTON_LOGOUT } from '../../constants';
 import logo from '../../assets/images/logo.png';
 
-import { setLogout } from '../../store/user/actionCreators';
 import { getUser } from '../../store/selectors';
+import { deleteUser } from '../../store/user/thunk';
 
 import './header.css';
 
@@ -19,7 +19,7 @@ const Header = () => {
 	const dispatch = useDispatch();
 
 	const removeUser = () => {
-		dispatch(setLogout());
+		dispatch(deleteUser(user.token));
 		history.push('/login');
 	};
 

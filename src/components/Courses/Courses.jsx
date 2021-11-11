@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -7,21 +6,20 @@ import SearchBar from './components/SearchBar/SearchBar';
 import CourseCard from './components/CourseCard/CourseCard';
 import Button from '../../common/Button/Button';
 
-import {
-	BUTTON_ADD_NEW_COURSE,
-	BUTTON_TYPE_BUTTON,
-	URL_GET_COURSES_ALL,
-} from '../../constants';
-import { fetchData } from '../../services';
+import { BUTTON_ADD_NEW_COURSE, BUTTON_TYPE_BUTTON } from '../../constants';
 
-import { getCourse } from '../../store/courses/actionCreators';
-import { getCourses } from '../../store/selectors';
+import { getCourses, getUser } from '../../store/selectors';
+
+import { fetchUserRole } from '../../store/user/thunk';
+import { fetchCourse } from '../../store/courses/thunk';
+import { fetchAuthors } from '../../store/authors/thunk';
 
 import './courses.css';
 
-const Courses = ({ firstRender, setFirstRender }) => {
-	const [courseList, setCourseList] = useState([]);
+const Courses = () => {
 	const courses = useSelector(getCourses);
+	const [courseList, setCourseList] = useState([]);
+	const user = useSelector(getUser);
 
 	const history = useHistory();
 	const dispatch = useDispatch();
@@ -31,32 +29,28 @@ const Courses = ({ firstRender, setFirstRender }) => {
 	};
 
 	useEffect(() => {
-		const getData = async () => {
-			try {
-				const data = await fetchData(URL_GET_COURSES_ALL);
-				if (data?.successful) {
-					dispatch(getCourse(data.result));
-					setFirstRender(!firstRender);
-				}
-			} catch (error) {
-				console.log('COURSE Fetch error');
-			}
-		};
-		if (firstRender) {
-			getData();
+		if (window.localStorage.getItem('user')) {
+			dispatch(fetchUserRole(window.localStorage.getItem('user')));
 		}
+		dispatch(fetchCourse);
+		dispatch(fetchAuthors);
+	}, [dispatch]);
+
+	useEffect(() => {
 		setCourseList(courses);
-	}, [dispatch, courses, firstRender, setFirstRender]);
+	}, [courses]);
 
 	return (
 		<>
 			<section className='search-section'>
 				<SearchBar setCourseList={setCourseList} />
-				<Button
-					content={BUTTON_ADD_NEW_COURSE}
-					type={BUTTON_TYPE_BUTTON}
-					onClick={CourseForm}
-				/>
+				{user.role === 'admin' && (
+					<Button
+						content={BUTTON_ADD_NEW_COURSE}
+						type={BUTTON_TYPE_BUTTON}
+						onClick={CourseForm}
+					/>
+				)}
 			</section>
 			{courseList &&
 				courseList.map((course) => {
@@ -64,10 +58,6 @@ const Courses = ({ firstRender, setFirstRender }) => {
 				})}
 		</>
 	);
-};
-Courses.propTypes = {
-	firstRender: PropTypes.bool.isRequired,
-	setFirstRender: PropTypes.func.isRequired,
 };
 
 export default Courses;
