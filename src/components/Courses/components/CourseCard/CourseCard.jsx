@@ -23,13 +23,15 @@ const CourseCard = ({
 	duration,
 	authors: IdAuthors,
 }) => {
-	const history = useHistory();
-	const dispatch = useDispatch();
-	const authors = useSelector(getAuthors);
 	const user = useSelector(getUser);
+	const authors = useSelector(getAuthors);
+
+	const dispatch = useDispatch();
+
+	const history = useHistory();
 
 	const handleDelCourse = () => {
-		dispatch(deleteCourseFun(id, user.token));
+		dispatch(deleteCourseFun(id));
 	};
 
 	const handleUpdateCourse = () => {

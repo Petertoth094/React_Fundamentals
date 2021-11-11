@@ -22,9 +22,10 @@ export const fetchCourse = async (dispatch, getState) => {
 	}
 };
 
-export const createCourse = (course, token) => {
+export const createCourse = (course) => {
 	return async function createCourseThunk(dispatch, getState) {
 		try {
+			const token = getState()?.user?.token;
 			const response = await fetch(
 				`${constants.URL}${constants.URL_POST_COURSE}`,
 				{
@@ -48,9 +49,10 @@ export const createCourse = (course, token) => {
 	};
 };
 
-export const deleteCourseFun = (id, token) => {
+export const deleteCourseFun = (id) => {
 	return async function deleteCourseFunThunk(dispatch, getState) {
 		try {
+			const token = getState()?.user?.token;
 			const response = await fetch(
 				`${constants.URL}${constants.URL_COURSES}/${id}`,
 				{
@@ -72,9 +74,10 @@ export const deleteCourseFun = (id, token) => {
 	};
 };
 
-export const updateCourseFun = (course, id, token) => {
+export const updateCourseFun = (course, id) => {
 	return async function updateCourseFunThunk(dispatch, getState) {
 		try {
+			const token = getState()?.user?.token;
 			const response = await fetch(
 				`${constants.URL}${constants.URL_COURSES}/${id}`,
 				{

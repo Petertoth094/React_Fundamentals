@@ -18,7 +18,7 @@ import { FormValidator } from '../../helpers/formValidator';
 
 import { getAuthors, getCourses } from '../../store/selectors';
 import { createCourse, updateCourseFun } from '../../store/courses/thunk';
-import { fetchAuthors, postNewAuthor } from '../../store/authors/thunk';
+import { postNewAuthor } from '../../store/authors/thunk';
 
 import './courseForm.css';
 
@@ -59,11 +59,9 @@ const CourseForm = () => {
 				authors: [...courseAuthors.map((authors) => authors.id)],
 			};
 			if (courseID) {
-				dispatch(
-					updateCourseFun(newCourse, courseID, localStorage.getItem('user'))
-				);
+				dispatch(updateCourseFun(newCourse, courseID));
 			} else {
-				dispatch(createCourse(newCourse, window.localStorage.getItem('user')));
+				dispatch(createCourse(newCourse));
 			}
 			history.push('/courses');
 		} else {
@@ -77,11 +75,7 @@ const CourseForm = () => {
 				name: authorName,
 				id: uuid_v4(),
 			};
-			dispatch(
-				postNewAuthor(window.localStorage.getItem('user'), {
-					name: newAuthor.name,
-				})
-			);
+			dispatch(postNewAuthor({ name: newAuthor.name }));
 			setListOfAuthors((oldAuthors) => {
 				return [...oldAuthors, newAuthor];
 			});
@@ -115,7 +109,6 @@ const CourseForm = () => {
 
 	useEffect(() => {
 		if (courseID) {
-			const updateThisCourse = courses.find((course) => course.id === courseID);
 			setTitle(updateThisCourse.title);
 			setDescription(updateThisCourse.description);
 			setDuration(updateThisCourse.duration);
@@ -128,7 +121,8 @@ const CourseForm = () => {
 				authors.filter((author) => updateThisCourse.authors.includes(author.id))
 			);
 		}
-	}, [authors, courseID, courses]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	return (
 		<form onSubmit={handleSubmit} className='course-form'>

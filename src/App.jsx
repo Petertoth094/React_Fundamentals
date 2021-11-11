@@ -8,11 +8,11 @@ import Login from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import PrivateRouter from './components/PrivateRouter/PrivateRouter';
 
-import { localeUser } from './constants';
-
 import './App.css';
 
 function App() {
+	const localeUser = window.localStorage.getItem('user');
+
 	return (
 		<div className='container'>
 			<Header />

@@ -53,8 +53,6 @@ const mockedAuthorsList = [
 	},
 ];
 
-export const localeUser = window.localStorage.getItem('user');
-
 const BUTTON_LOGOUT = 'Logout';
 const BUTTON_SEARCH = 'Search';
 const BUTTON_UPDATE = 'Update';

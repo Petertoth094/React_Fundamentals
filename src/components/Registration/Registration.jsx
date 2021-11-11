@@ -4,7 +4,6 @@ import { Link, useHistory } from 'react-router-dom';
 
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
-import { URL_LOGIN, URL_REGISER } from '../../constants';
 
 import { registerUser } from '../../store/user/thunk';
 

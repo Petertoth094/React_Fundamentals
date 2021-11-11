@@ -17,10 +17,10 @@ export const fetchAuthors = async (dispatch, getState) => {
 	}
 };
 
-export const postNewAuthor = (token, author) => {
-	console.log(author);
+export const postNewAuthor = (author) => {
 	return async function postNewAuthorThunk(dispatch, getState) {
 		try {
+			const token = getState()?.user?.token;
 			const response = await fetch(
 				`${constants.URL}${constants.URL_POST_AUTHORS}`,
 				{
@@ -36,7 +36,7 @@ export const postNewAuthor = (token, author) => {
 			if (result?.successful) {
 				dispatch(saveNewAuthor(result.result));
 			} else {
-				console.log('addUserThunk error');
+				console.log('postNewAuthor error');
 			}
 		} catch (error) {
 			console.log(error);
