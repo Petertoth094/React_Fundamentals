@@ -68,3 +68,25 @@ export const loginUser = (user, history) => {
 		}
 	};
 };
+
+export const registerUser = (user, history) => {
+	return async function registerUserThunk(dispatch, getState) {
+		try {
+			const response = await fetch(`${constants.URL}${constants.URL_REGISER}`, {
+				method: 'POST',
+				body: JSON.stringify(user),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			const result = await response.json();
+			if (result.successful) {
+				history.push(constants.URL_LOGIN);
+			} else {
+				alert(result.errors);
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+};

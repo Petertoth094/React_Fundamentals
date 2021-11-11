@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
 import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { URL_LOGIN, URL_REGISER } from '../../constants';
 
-import { postUser } from '../../services';
+import { registerUser } from '../../store/user/thunk';
 
 import './registration.css';
 
@@ -15,22 +16,12 @@ const Registration = () => {
 	const [password, setPassword] = useState('');
 
 	const history = useHistory();
+	const dispatch = useDispatch();
 
-	const registerUser = (e) => {
+	const register = (e) => {
 		e.preventDefault();
 		if (name !== '' && email !== '' && password.length > 0) {
-			const newUser = {
-				name,
-				password,
-				email,
-			};
-			postUser(newUser, URL_REGISER).then((data) => {
-				if (data?.successful) {
-					history.push(URL_LOGIN);
-				} else {
-					alert(data?.errors);
-				}
-			});
+			dispatch(registerUser({ name, email, password }, history));
 		} else {
 			alert('Input the neccesary data');
 		}
@@ -39,7 +30,7 @@ const Registration = () => {
 	return (
 		<div className='registration-container'>
 			<h2>Registration</h2>
-			<form className='registration-form' onSubmit={registerUser}>
+			<form className='registration-form' onSubmit={register}>
 				<Input
 					labelText='Name'
 					placeholderText='Enter name'

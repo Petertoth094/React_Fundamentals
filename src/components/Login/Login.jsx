@@ -5,12 +5,9 @@ import Button from '../../common/Button/Button';
 import Input from '../../common/Input/Input';
 import { useDispatch } from 'react-redux';
 
-import { setLogin } from '../../store/user/actionCreators';
-import { URL_COURSES, URL_LOGIN } from '../../constants';
-import { postUser } from '../../services';
+import { loginUser } from '../../store/user/thunk';
 
 import './login.css';
-import { loginUser } from '../../store/user/thunk';
 
 const Login = () => {
 	const [email, setEmail] = useState('');
