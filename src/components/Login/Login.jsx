@@ -10,6 +10,7 @@ import { URL_COURSES, URL_LOGIN } from '../../constants';
 import { postUser } from '../../services';
 
 import './login.css';
+import { loginUser } from '../../store/user/thunk';
 
 const Login = () => {
 	const [email, setEmail] = useState('');
@@ -18,21 +19,10 @@ const Login = () => {
 	let history = useHistory();
 	const dispatch = useDispatch();
 
-	const loginUser = (e) => {
+	const login = (e) => {
 		e.preventDefault();
 		if (email !== '' && password.length > 0) {
-			const login = {
-				email,
-				password,
-			};
-			postUser(login, URL_LOGIN).then((data) => {
-				if (data?.successful) {
-					dispatch(setLogin(data.result, data.user));
-					history.push(URL_COURSES);
-				} else {
-					alert('Wrong username or password!');
-				}
-			});
+			dispatch(loginUser({ email, password }, history));
 		} else {
 			alert('Add login credentials');
 		}
@@ -41,7 +31,7 @@ const Login = () => {
 	return (
 		<div className='login-container'>
 			<h2>Login</h2>
-			<form className='login-form' onSubmit={loginUser}>
+			<form className='login-form' onSubmit={login}>
 				<Input
 					labelText='Email'
 					placeholderText='Enter email'

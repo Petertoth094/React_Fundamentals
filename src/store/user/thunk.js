@@ -1,5 +1,5 @@
 import * as constants from '../../constants';
-import { setLogout, updateLogin } from './actionCreators';
+import { setLogin, setLogout, updateLogin } from './actionCreators';
 
 export const fetchUserRole = (token) => {
 	return async function fetchUserRoleThunk(dispatch, getState) {
@@ -25,9 +25,10 @@ export const fetchUserRole = (token) => {
 	};
 };
 
-export const deleteUser = (token) => {
+export const deleteUser = () => {
 	return async function deleteUserThunk(dispatch, getState) {
 		try {
+			const token = getState()?.user?.token;
 			const response = await fetch(`${constants.URL}${constants.URL_LOGOUT}`, {
 				method: 'DELETE',
 				headers: {
@@ -38,6 +39,29 @@ export const deleteUser = (token) => {
 				dispatch(setLogout());
 			} else {
 				console.log('deleteUserThunk error');
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	};
+};
+
+export const loginUser = (user, history) => {
+	return async function loginUserThunk(dispatch, getState) {
+		try {
+			const response = await fetch(`${constants.URL}${constants.URL_LOGIN}`, {
+				method: 'POST',
+				body: JSON.stringify(user),
+				headers: {
+					'Content-Type': 'application/json',
+				},
+			});
+			const result = await response.json();
+			if (result.successful) {
+				dispatch(setLogin(result.result, result.user));
+				history.push(constants.URL_COURSES);
+			} else {
+				alert('Wrong username or password!');
 			}
 		} catch (error) {
 			console.log(error);

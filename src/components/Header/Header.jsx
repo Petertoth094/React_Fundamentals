@@ -19,7 +19,7 @@ const Header = () => {
 	const dispatch = useDispatch();
 
 	const removeUser = () => {
-		dispatch(deleteUser(user.token));
+		dispatch(deleteUser());
 		history.push('/login');
 	};
 

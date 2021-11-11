@@ -90,7 +90,7 @@ export const updateCourseFun = (course, id, token) => {
 			if (result?.successful) {
 				dispatch(updateCourse(result.result));
 			} else {
-				console.log('Something wrong with delete course');
+				console.log('Something wrong with update course');
 			}
 		} catch (error) {
 			console.log(error);

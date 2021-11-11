@@ -8,11 +8,11 @@ import Login from './components/Login/Login';
 import CourseInfo from './components/CourseInfo/CourseInfo';
 import PrivateRouter from './components/PrivateRouter/PrivateRouter';
 
+import { localeUser } from './constants';
+
 import './App.css';
 
 function App() {
-	const user = window.localStorage.getItem('user') || null;
-
 	return (
 		<div className='container'>
 			<Header />
@@ -37,7 +37,11 @@ function App() {
 						<CourseInfo />
 					</Route>
 					<Route path='/'>
-						{!user ? <Redirect to='/login' /> : <Redirect to='/courses' />}
+						{!localeUser ? (
+							<Redirect to='/login' />
+						) : (
+							<Redirect to='/courses' />
+						)}
 					</Route>
 				</Switch>
 			</main>
