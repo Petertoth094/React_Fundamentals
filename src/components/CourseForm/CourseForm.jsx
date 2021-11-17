@@ -25,6 +25,7 @@ import './courseForm.css';
 const CourseForm = () => {
 	const authors = useSelector(getAuthors);
 	const courses = useSelector(getCourses);
+	const { courseID } = useParams();
 
 	const [title, setTitle] = useState('');
 	const [description, setDescription] = useState('');
@@ -35,7 +36,6 @@ const CourseForm = () => {
 	const [courseAuthors, setCourseAuthors] = useState([]);
 
 	const history = useHistory();
-	const { courseID } = useParams();
 	const updateThisCourse = courses.find((course) => course.id === courseID);
 
 	const dispatch = useDispatch();
@@ -125,7 +125,11 @@ const CourseForm = () => {
 	}, []);
 
 	return (
-		<form onSubmit={handleSubmit} className='course-form'>
+		<form
+			onSubmit={handleSubmit}
+			className='course-form'
+			data-testid='courseForm'
+		>
 			<div className='create-course-header'>
 				<Input
 					labelText='Title'
@@ -187,7 +191,7 @@ const CourseForm = () => {
 						listOfAuthors.map((author) => {
 							return (
 								<div key={author.id} className='couse-authors--selectable'>
-									<p>
+									<p data-testid='authors-list'>
 										{author?.name}
 										<Button
 											content={BUTTON_ADD_AUTHOR}
@@ -206,7 +210,7 @@ const CourseForm = () => {
 						courseAuthors.map((courseAuthor, index) => {
 							return (
 								<div key={index} className='course-authors--selected'>
-									<p>
+									<p data-testid='course-authors'>
 										{courseAuthor.name}
 										<Button
 											content={BUTTON_DELETE_AUTHOR}

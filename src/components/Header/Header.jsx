@@ -26,7 +26,7 @@ const Header = () => {
 	return (
 		<header className='header-container'>
 			<Logo logo={logo} />
-			{user.token && (
+			{user.isAuth && (
 				<>
 					<h2 className='header-title--right'>{user.name}</h2>
 					<Button content={BUTTON_LOGOUT} onClick={removeUser} />

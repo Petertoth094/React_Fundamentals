@@ -57,7 +57,13 @@ const Courses = () => {
 			</section>
 			{courseList &&
 				courseList.map((course) => {
-					return <CourseCard key={course.id} {...course} />;
+					return (
+						<CourseCard
+							data-testid='course-card-component'
+							key={course.id}
+							{...course}
+						/>
+					);
 				})}
 		</>
 	);

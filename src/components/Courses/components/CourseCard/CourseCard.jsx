@@ -52,19 +52,21 @@ const CourseCard = ({
 	return (
 		<article className='course-card'>
 			<section className='course-card-header'>
-				<h2>{title}</h2>
-				<p className='course-card-description'>{description}</p>
+				<h2 data-testid='course-title'>{title}</h2>
+				<p className='course-card-description' data-testid='course-description'>
+					{description}
+				</p>
 			</section>
 			<section className='course-card-info'>
-				<p className='card-ellipsis'>
+				<p className='card-ellipsis' data-testid='course-authors'>
 					<span className='card-title'>Authors: </span>
 					{renderAuthorsFun(IdAuthors)}
 				</p>
-				<p>
+				<p data-testid='course-duration'>
 					<span className='card-title'>Duration: </span>
 					{pipeDuration(+duration) + ' hours'}
 				</p>
-				<p>
+				<p data-testid='course-creation'>
 					<span className='card-title'>Created: </span>
 					{creationDate}
 				</p>
