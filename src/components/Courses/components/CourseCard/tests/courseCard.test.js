@@ -2,31 +2,19 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import { render, screen } from '@testing-library/react';
 
+import { mockedStore, mockedState } from '../../../../../testing/mockedStore';
+
 import CourseCard from '../CourseCard';
+
 import { mockedCoursesList, mockedAuthorsList } from '../../../../../constants';
 import { pipeDuration } from '../../../../../helpers/pipeDuration';
 import { renderAuthors } from '../../../../../helpers/renderAuthors';
 
-const mockedState = {
-	user: {
-		isAuth: true,
-		name: 'Test Name',
-	},
-	courses: [],
-	authors: [],
-};
-
-const mockedStore = {
-	getState: () => mockedState,
-	subscribe: jest.fn(),
-	dispatch: jest.fn(),
-};
-
 describe('CouseCard component tests', () => {
-	mockedStore.getState().courses = mockedCoursesList;
-	mockedStore.getState().authors = mockedAuthorsList;
+	mockedState.courses = mockedCoursesList;
+	mockedState.authors = mockedAuthorsList;
 
-	const card = mockedStore.getState().courses[0];
+	const card = mockedCoursesList[0];
 
 	beforeEach(() => {
 		render(

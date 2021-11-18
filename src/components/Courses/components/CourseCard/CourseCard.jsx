@@ -50,7 +50,7 @@ const CourseCard = ({
 	};
 
 	return (
-		<article className='course-card'>
+		<article className='course-card' data-testid='course-card-component'>
 			<section className='course-card-header'>
 				<h2 data-testid='course-title'>{title}</h2>
 				<p className='course-card-description' data-testid='course-description'>
@@ -73,8 +73,16 @@ const CourseCard = ({
 				<Button content={BUTTON_SHOW_COURSE} onClick={showCourse} />
 				{user.role === 'admin' && (
 					<>
-						<Button content={<HiPencil />} onClick={handleUpdateCourse} />
-						<Button content={<FaTrash />} onClick={handleDelCourse} />
+						<Button
+							testId='course-update-btn'
+							content={<HiPencil />}
+							onClick={handleUpdateCourse}
+						/>
+						<Button
+							testId='course-delete-btn'
+							content={<FaTrash />}
+							onClick={handleDelCourse}
+						/>
 					</>
 				)}
 			</section>

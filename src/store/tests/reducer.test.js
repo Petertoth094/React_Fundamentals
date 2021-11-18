@@ -3,21 +3,6 @@ import { getCourse, saveNewCourse } from '../courses/actionCreators';
 
 import { mockedCoursesList } from '../../constants';
 
-export const mockedState = {
-	user: {
-		isAuth: true,
-		name: 'Test Name',
-	},
-	courses: [],
-	authors: [],
-};
-
-export const mockedStore = {
-	getState: () => mockedState,
-	subscribe: jest.fn(),
-	dispatch: jest.fn(),
-};
-
 describe('coursesReducer', () => {
 	it('should return the initial state', () => {
 		expect(coursesReducer([], {})).toEqual([]);

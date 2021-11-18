@@ -1,79 +1,72 @@
 import React from 'react';
+import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import '@testing-library/jest-dom';
+import { createMemoryHistory } from 'history';
 
+import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import Courses from '../Courses';
+import { mockedState, mockedStore } from '../../../testing/mockedStore';
+
 import {
+	BUTTON_ADD_NEW_COURSE,
 	BUTTON_CREATE_NEW_COURSE,
+	mockedAuthorsList,
 	mockedCoursesList,
 } from '../../../constants';
 
-import { createMemoryHistory } from 'history';
-import { Router } from 'react-router-dom';
+import App from '../../../App';
+import Courses from '../Courses';
 
-const mockedState = {
-	user: {
-		isAuth: true,
-		name: 'Test Name',
-	},
-	courses: [],
-	authors: [],
-};
+describe('Courses component ', () => {
+	mockedState.user.role = 'admin';
 
-const mockedStore = {
-	getState: () => mockedState,
-	subscribe: jest.fn(),
-	dispatch: jest.fn(),
-};
+	it('should display amount of CourseCard equal length of courses array', () => {
+		const length = mockedCoursesList.length;
+		mockedState.courses = mockedCoursesList;
+		mockedState.authors = mockedAuthorsList;
 
-beforeEach(() => {
-	mockedStore.getState().courses = [];
-	mockedStore.getState().authors = [];
-});
-
-it('should display amount of CourseCard equal length of courses array', async () => {
-	const length = mockedCoursesList.length;
-	mockedStore.getState().courses = mockedCoursesList;
-
-	const wrapper = render(
-		<Provider store={mockedStore}>
-			<Courses />
-		</Provider>
-	);
-
-	const courseCard = wrapper.getAllByTestId('course-title');
-	expect(courseCard.length).toEqual(length);
-});
-
-it('should display Empty container if courses array length is 0', async () => {
-	render(
-		<Provider store={mockedStore}>
-			<Courses />
-		</Provider>
-	);
-
-	const child = screen.queryByTestId('course-card-component');
-	expect(child).not.toBeInTheDocument();
-});
-
-it('CourseForm should be showed after a click on a button "Add new course', async () => {
-	const history = createMemoryHistory();
-	mockedStore.getState().user.role = 'admin';
-	render(
-		<Provider store={mockedStore}>
-			<Router history={history}>
+		render(
+			<Provider store={mockedStore}>
 				<Courses />
-			</Router>
-		</Provider>
-	);
-	const newCourseBtn = screen.getByText('Add new course');
-	expect(newCourseBtn).toBeInTheDocument();
+			</Provider>
+		);
+		const courseCard = screen.getAllByTestId('course-card-component');
+		expect(courseCard.length).toEqual(length);
+	});
 
-	userEvent.click(newCourseBtn);
-	expect(history.length).toBe(2);
-	expect(history.location.pathname).toBe('/courses/add');
-	expect(screen.queryByText(BUTTON_CREATE_NEW_COURSE));
+	it('should display Empty container if courses array length is 0', () => {
+		mockedState.courses = [];
+		render(
+			<Provider store={mockedStore}>
+				<Courses />
+			</Provider>
+		);
+
+		const courseCard = screen.queryAllByTestId('course-card-component');
+		expect(courseCard.length).toBe(0);
+
+		// const courseCard = screen.queryByTestId('course-card-component');
+		// expect(courseCard).not.toBeInTheDocument();
+	});
+
+	it('should be showed after a click on a button "Add new course', async () => {
+		const history = createMemoryHistory();
+		render(
+			<Provider store={mockedStore}>
+				<Router history={history}>
+					<App />
+				</Router>
+			</Provider>
+		);
+		const newCourseBtn = screen.getByText(BUTTON_ADD_NEW_COURSE);
+		expect(newCourseBtn).toBeInTheDocument();
+
+		userEvent.click(newCourseBtn);
+
+		expect(history.length).toBe(2);
+		expect(history.location.pathname).toBe('/courses/add');
+		expect(screen.queryByText(BUTTON_CREATE_NEW_COURSE)).toBeInTheDocument();
+	});
 });

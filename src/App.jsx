@@ -9,9 +9,19 @@ import CourseInfo from './components/CourseInfo/CourseInfo';
 import PrivateRouter from './components/PrivateRouter/PrivateRouter';
 
 import './App.css';
+import { useSelector } from 'react-redux';
+import { getUser } from './store/selectors';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchUserRole } from './store/user/thunk';
 
 function App() {
-	const localeUser = window.localStorage.getItem('user');
+	const user = useSelector(getUser);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(fetchUserRole());
+	}, [dispatch]);
 
 	return (
 		<div className='container'>
@@ -27,17 +37,23 @@ function App() {
 					<Route exact path='/courses'>
 						<Courses />
 					</Route>
-					<PrivateRouter exact path='/courses/add' component={CourseForm} />
+					<PrivateRouter
+						exact
+						path='/courses/add'
+						component={CourseForm}
+						role={user.role}
+					/>
 					<PrivateRouter
 						exact
 						path='/courses/update/:courseID'
 						component={CourseForm}
+						role={user.role}
 					/>
 					<Route exact path='/courses/:courseID'>
 						<CourseInfo />
 					</Route>
 					<Route path='/'>
-						{!localeUser ? (
+						{!user.isAuth ? (
 							<Redirect to='/login' />
 						) : (
 							<Redirect to='/courses' />

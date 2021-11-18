@@ -8,9 +8,15 @@ const Button = ({
 	type = 'submit',
 	onClick,
 	buttonClassName = '',
+	testId,
 }) => {
 	return (
-		<button className={`btn ${buttonClassName}`} type={type} onClick={onClick}>
+		<button
+			data-testid={testId}
+			className={`btn ${buttonClassName}`}
+			type={type}
+			onClick={onClick}
+		>
 			{content}
 		</button>
 	);

@@ -5,37 +5,21 @@ import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 
 import Header from '../Header';
-
-const mockedState = {
-	user: {
-		isAuth: true,
-		name: 'Test Name',
-	},
-	courses: [],
-	authors: [],
-};
-
-const mockedStore = {
-	getState: () => mockedState,
-	subscribe: jest.fn(),
-	dispatch: jest.fn(),
-};
+import { mockedStore } from '../../../testing/mockedStore';
 
 describe('Header renders logo and username', () => {
-	it('should displays the logo', () => {
-		const { getByAltText } = render(
-			<Provider store={mockedStore}>
-				<Header />
-			</Provider>
-		);
-		expect(getByAltText('courses-app-logo')).toBeInTheDocument();
-	});
-	it('should render the name', () => {
+	beforeEach(() => {
 		render(
 			<Provider store={mockedStore}>
 				<Header />
 			</Provider>
 		);
-		expect(screen.queryByText('Test Name')).toBeInTheDocument();
+	});
+	it('should displays the logo', () => {
+		expect(screen.getByAltText('courses-app-logo')).toBeInTheDocument();
+	});
+	it('should render the name', () => {
+		const userName = mockedStore.getState().user.name;
+		expect(screen.getByText(userName)).toBeInTheDocument();
 	});
 });
