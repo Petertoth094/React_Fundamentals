@@ -37,8 +37,10 @@ export const deleteUser = () => {
 			});
 			if (response.status === 200) {
 				dispatch(setLogout());
+				return { success: true, msg: '' };
 			} else {
-				console.log('deleteUserThunk error');
+				return { success: false, msg: 'DeleteUserThunk error' };
+				// console.log('deleteUserThunk error');
 			}
 		} catch (error) {
 			console.log(error);

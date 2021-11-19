@@ -14,17 +14,22 @@ import { getUser } from './store/selectors';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchUserRole } from './store/user/thunk';
+import { useState } from 'react';
 
 function App() {
+	const [loading, setLoading] = useState(true);
 	const user = useSelector(getUser);
 	const token = window.localStorage.getItem('user');
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (token) {
-			dispatch(fetchUserRole(token));
+		if (loading) {
+			if (token) {
+				dispatch(fetchUserRole(token));
+			}
+			setLoading(!loading);
 		}
-	}, [dispatch, token]);
+	}, [dispatch, loading, token]);
 
 	return (
 		<div className='container'>
@@ -32,7 +37,7 @@ function App() {
 			<main className='course-container'>
 				<Switch>
 					<Route exact path='/login'>
-						<Login />
+						{user.isAuth ? <Redirect to='/courses' /> : <Login />}
 					</Route>
 					<Route exact path='/registration'>
 						<Registration />
