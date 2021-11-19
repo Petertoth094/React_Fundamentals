@@ -7,6 +7,8 @@ import { useDispatch } from 'react-redux';
 
 import { loginUser } from '../../store/user/thunk';
 
+import { URL_COURSES } from '../../constants';
+
 import './login.css';
 
 const Login = () => {
@@ -19,7 +21,11 @@ const Login = () => {
 	const login = (e) => {
 		e.preventDefault();
 		if (email !== '' && password.length > 0) {
-			dispatch(loginUser({ email, password }, history));
+			dispatch(loginUser({ email, password }, history)).then((success) =>
+				success
+					? history.push(URL_COURSES)
+					: alert('Wrong username or password!')
+			);
 		} else {
 			alert('Add login credentials');
 		}

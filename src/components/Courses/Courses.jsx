@@ -17,7 +17,7 @@ import { fetchAuthors } from '../../store/authors/thunk';
 import './courses.css';
 
 const Courses = () => {
-	const localeUser = window.localStorage.getItem('user');
+	const token = window.localStorage.getItem('user');
 
 	const courses = useSelector(getCourses);
 	const user = useSelector(getUser);
@@ -32,12 +32,12 @@ const Courses = () => {
 	};
 
 	useEffect(() => {
-		if (localeUser) {
-			dispatch(fetchUserRole(localeUser));
+		if (token) {
+			dispatch(fetchUserRole(token));
 		}
 		dispatch(fetchCourse);
 		dispatch(fetchAuthors);
-	}, [dispatch, localeUser]);
+	}, [dispatch, token]);
 
 	useEffect(() => {
 		setCourseList(courses);

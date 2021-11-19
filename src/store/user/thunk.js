@@ -46,7 +46,7 @@ export const deleteUser = () => {
 	};
 };
 
-export const loginUser = (user, history) => {
+export const loginUser = (user) => {
 	return async function loginUserThunk(dispatch, getState) {
 		try {
 			const response = await fetch(`${constants.URL}${constants.URL_LOGIN}`, {
@@ -59,9 +59,9 @@ export const loginUser = (user, history) => {
 			const result = await response.json();
 			if (result.successful) {
 				dispatch(setLogin(result.result, result.user));
-				history.push(constants.URL_COURSES);
+				return true;
 			} else {
-				alert('Wrong username or password!');
+				return false;
 			}
 		} catch (error) {
 			console.log(error);
@@ -69,7 +69,7 @@ export const loginUser = (user, history) => {
 	};
 };
 
-export const registerUser = (user, history) => {
+export const registerUser = (user) => {
 	return async function registerUserThunk(dispatch, getState) {
 		try {
 			const response = await fetch(`${constants.URL}${constants.URL_REGISER}`, {
@@ -81,9 +81,9 @@ export const registerUser = (user, history) => {
 			});
 			const result = await response.json();
 			if (result.successful) {
-				history.push(constants.URL_LOGIN);
+				return { success: true, msg: '' };
 			} else {
-				alert(result.errors);
+				return { success: false, msg: result.errors };
 			}
 		} catch (error) {
 			console.log(error);

@@ -17,11 +17,14 @@ import { fetchUserRole } from './store/user/thunk';
 
 function App() {
 	const user = useSelector(getUser);
+	const token = window.localStorage.getItem('user');
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(fetchUserRole());
-	}, [dispatch]);
+		if (token) {
+			dispatch(fetchUserRole(token));
+		}
+	}, [dispatch, token]);
 
 	return (
 		<div className='container'>

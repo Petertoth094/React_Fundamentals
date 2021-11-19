@@ -56,7 +56,7 @@ const CourseForm = () => {
 					? updateThisCourse.creationDate
 					: getFormattedDate(new Date()),
 				duration: parseInt(duration),
-				authors: [...courseAuthors.map((authors) => authors.id)],
+				authors: courseAuthors.map((authors) => authors.id),
 			};
 			if (courseID) {
 				dispatch(updateCourseFun(newCourse, courseID));

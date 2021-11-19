@@ -7,6 +7,8 @@ import Input from '../../common/Input/Input';
 
 import { registerUser } from '../../store/user/thunk';
 
+import { URL_LOGIN } from '../../constants';
+
 import './registration.css';
 
 const Registration = () => {
@@ -20,7 +22,9 @@ const Registration = () => {
 	const register = (e) => {
 		e.preventDefault();
 		if (name !== '' && email !== '' && password.length > 0) {
-			dispatch(registerUser({ name, email, password }, history));
+			dispatch(registerUser({ name, email, password })).then((data) =>
+				data.success ? history.push(URL_LOGIN) : alert(data.msg)
+			);
 		} else {
 			alert('Input the neccesary data');
 		}
